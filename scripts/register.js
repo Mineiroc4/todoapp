@@ -9,7 +9,7 @@ O botão de cadastro deve ser habilitado apenas quando todos os campos do formul
 window.onload = function (){
   // coletando os valores de cada input partindo do click no botão.
 const registerBtn = document.getElementById('createAccountBtn')
-registerBtn.addEventListener("click", () => {
+registerBtn.addEventListener("click", (e) => {
 
  const name = document.getElementById('inputName').value
  const lastName = document.getElementById('inputLastName').value
@@ -36,6 +36,6 @@ registerBtn.addEventListener("click", () => {
  console.log(passwordRegisterFormat)
  console.log(passwordConfirmFormat)
 
- preventDefault()
+ e.preventDefault()
 })
 }
