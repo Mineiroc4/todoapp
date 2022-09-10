@@ -7,47 +7,55 @@ O botão de acesso deve ser habilitado apenas quando todos os campos do formulá
 
 // normalizando os dados da página de login de cadastro.
 // pegando os elementos.
-window.onload = function (){
-  let email = document.getElementById('inputEmail')
-  let password = document.getElementById('inputPassword')
 
-     email.addEventListener("focus", function(){
-        console.log("Campo selicionado")
-        function validateEmail(email) {
-           const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-           return re.test(String(email).toLowerCase());
-         }
-        if(validateEmail(email)){
-           email.style.backgroundColor = 'green'
-           email.style.color ='black'
-        }else{
-           email.style.backgroundColor = 'red'
-        }
-        
-     })
+const email = document.getElementById('inputEmail').value
+const password = document.getElementById('inputPassword').value
+const sendBtn = document.getElementById('access')
 
-  const accessBtn = document.getElementById('access')
-     accessBtn.addEventListener("click",  (e) => {
-        const email = document.getElementById('inputEmail').value
-        const password = document.getElementById('inputPassword').value
-      // testing
-      // console.log(email)
-      // console.log(password)
-                 
-           
-      // formatando os dados (removendo espaços)
-      let emailFormat = email.replace(/\s/g, '')
-      let passwordFormat = password.replace(/\s/g, '')
+const emailRegEx =
+  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 
-      // testing
-      console.log(emailFormat)
-      console.log(passwordFormat)
-      // validações
-      if(emailFormat === ''){
-        console.log('o campo nao pode ser nulo')
-      }
+const passwordRegEx =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i
 
-      e.preventDefault()
-     })
+sendBtn.addEventListener('click', e => {
+  e.preventDefault()
+  ValidityState()
+})
 
-    }
+inputEmail.addEventListener('keyup', () => {
+  if (document.getElementById('inputEmail').value.match(emailRegEx)) {
+    let warning = document.getElementById('emailMessage')
+    warning.innerText = 'O endereço de email é válido!'
+    warning.style.color = 'green'
+    return true
+  } else {
+    let warning = document.getElementById('emailMessage')
+    warning.innerText = 'Por favor insira um formato válido de e-mail.'
+    warning.style.color = 'red'
+    return false
+  }
+})
+
+inputPassword.addEventListener('keyup', () => {
+  if (document.getElementById('inputPassword').value.match(passwordRegEx)) {
+    let warning = document.getElementById('passwordMessage')
+    warning.innerText = 'A senha utilizada é compatível!'
+    warning.style.color = 'green'
+    return true
+  } else {
+    let warning = document.getElementById('passwordMessage')
+    warning.innerText =
+      'À senha deve ter no minimo 8 caracteres e pelo menos um caractere maíusculo, um minusculo e um caractere especial.'
+    warning.style.color = 'red'
+    return false
+  }
+})
+
+function ValidityState() {
+  if (inputEmail === 'true' && inputPassword === 'true') {
+    document.querySelector('button').setAttribute('disabled', '')
+  } else {
+    document.querySelector('button').removeAttribute('disabled')
+  }
+}
