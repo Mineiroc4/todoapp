@@ -10,27 +10,51 @@ const emailRegister = document.getElementById('inputRegisterEmail')
 const passwordRegister = document.getElementById('inputRegisterPassword')
 const passwordConfirm = document.getElementById('inputPasswordConfirm')
 const createAccountBtn = document.getElementById('createAccountBtn')
+const nameRegister = document.getElementById('inputName')
+const lastName = document.getElementById('inputLastName')
 
 const emailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 
 const passwordRegEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i
 
+const nameRegEx = /^\S$|^\S[ \S]*\S$/
+
 
 createAccountBtn.addEventListener('click', e =>{
 
   formatingData()
-
+  
   e.preventDefault()
 })
 
-function formatingData(){
-  const name = document.getElementById('inputName').value
-  const lastName = document.getElementById('inputLastName').value
-  let nameFormat = name.replace(/\s/g, '')
-  let lastNameFormat = lastName.replace(/\s/g, '')
-  console.log(nameFormat)
-  console.log(lastNameFormat)
-}
+  inputName.addEventListener('keyup', () => {
+    if(nameRegister.value.match(nameRegEx)){
+      let warning = document.getElementById('nameMessage')
+      warning.innerText = 'O campo nome é válido!'
+      warning.style.color = 'green'
+
+    }else{
+      let warning = document.getElementById('nameMessage')
+      warning.innerText = 'Formato inválido!'
+      warning.style.color = 'red'
+    }
+    validityForm()
+  })
+
+  inputLastName.addEventListener('keyup', () => {
+    if(lastName.value.match(nameRegEx)){
+      let warning = document.getElementById('lastNameMessage')
+      warning.innerText = 'O campo sobrenome é valido!'
+      warning.style.color = 'green'
+
+    }else{
+      let warning = document.getElementById('lastNameMessage')
+      warning.innerText = 'Formato inválido!'
+      warning.style.color = 'red'
+    }
+    validityForm()
+  })
+ 
 
   emailRegister.addEventListener('keyup', () => {
     if(emailRegister.value.match(emailRegEx)){
@@ -44,6 +68,7 @@ function formatingData(){
       warning.innerText = 'Por favor insira um endereço de e-mail válido'
       warning.style.color = 'red'
     }
+    validityForm()
   })
 
   passwordRegister.addEventListener('keyup', () => {
@@ -58,6 +83,7 @@ function formatingData(){
       warning.innerText = 'À senha deve ter no minimo 8 caracteres e pelo menos um caractere maíusculo, um minusculo e um caractere especial.'
       warning.style.color = 'red'
     }
+    validityForm()
   })
 
   passwordConfirm.addEventListener('keyup', () =>{
@@ -70,5 +96,20 @@ function formatingData(){
       warning.innerText = 'À senha deve ser igual em ambos os campos'
       warning.style.color = 'red'
     }
+    validityForm()
   })
+
+function validityForm(){
+  if (document.getElementById('inputName').value.match(nameRegEx) &&
+   document.getElementById('inputLastName').value.match(nameRegEx) &&
+    document.getElementById('inputRegisterEmail').value.match(emailRegEx) &&
+     document.getElementById('inputRegisterPassword').value.match(passwordRegEx) &&
+      document.getElementById('inputPasswordConfirm').value.match(passwordRegEx)
+      ){
+
+      document.querySelector('button').removeAttribute('disabled')
+  }else{
+    document.querySelector('button').setAttribute('disabled','')
+  }
+}
   

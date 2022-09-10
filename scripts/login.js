@@ -29,16 +29,16 @@ inputEmail.addEventListener('keyup', () => {
     warning.innerText = 'O endereço de email é válido!'
     warning.style.color = 'green'
 
-    document.querySelector('button').removeAttribute('disabled')
-
+    // document.querySelector('button').removeAttribute('disabled')
+    validityForm()
   } else {
 
     let warning = document.getElementById('emailMessage')
     warning.innerText = 'Por favor insira um formato válido de e-mail.'
     warning.style.color = 'red'
 
-    document.querySelector('button').setAttribute('disabled','')
-
+    // document.querySelector('button').setAttribute('disabled','')
+    validityForm()
   }
 })
 
@@ -48,8 +48,8 @@ inputPassword.addEventListener('keyup', () => {
     let warning = document.getElementById('passwordMessage')
     warning.innerText = 'A senha utilizada é compatível!'
     warning.style.color = 'green'
-
-    document.querySelector('button').removeAttribute('disabled')
+    validityForm()
+    // document.querySelector('button').removeAttribute('disabled')
 
   } else {
 
@@ -58,7 +58,15 @@ inputPassword.addEventListener('keyup', () => {
       'À senha deve ter no minimo 8 caracteres e pelo menos um caractere maíusculo, um minusculo e um caractere especial.'
     warning.style.color = 'red'
 
-    document.querySelector('button').setAttribute('disabled','')
+    validityForm()
+    // document.querySelector('button').setAttribute('disabled','')
   }
 })
 
+function validityForm(){
+  if (document.getElementById('inputPassword').value.match(passwordRegEx) && document.getElementById('inputEmail').value.match(emailRegEx)){
+    document.querySelector('button').removeAttribute('disabled')
+  }else{
+    document.querySelector('button').setAttribute('disabled','')
+  }
+}
